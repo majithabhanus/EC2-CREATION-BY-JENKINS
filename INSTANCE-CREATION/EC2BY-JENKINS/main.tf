@@ -9,6 +9,6 @@ resource "aws_instance" "my_ec2" {
   key_name = "rrr"   # replace with your keypair
 
   tags = {
-    Name = "Jenkins-EC2"
+    Name = "Jenkins-EC2."
   }
 }
