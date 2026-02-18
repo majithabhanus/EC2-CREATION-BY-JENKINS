@@ -1,45 +1,43 @@
-pipeline {
+pipeline{
     agent any
-
-    environment {
-        AWS_CREDS = credentials('aws-cred')
-    }
-
     stages {
         stage('Checkout from Git'){
             steps{
                 git branch: 'master', url: 'https://github.com/majithabhanus/EC2-CREATION-BY-JENKINS.git'
             }
         }
-
         stage('Terraform version'){
-            steps{
-                sh 'terraform --version'
-            }
+             steps{
+                 sh 'terraform --version'
+             }
         }
-
         stage('Terraform init'){
-            steps{
-                dir('EC2BY-JENKINS') {
-                    sh '''
-                    export AWS_ACCESS_KEY_ID=$AWS_CREDS_USR
-                    export AWS_SECRET_ACCESS_KEY=$AWS_CREDS_PSW
-                    terraform init
-                    '''
-                }
-            }
+             steps{
+                 dir('EC2BY-JENKINS') {
+                      sh 'terraform init'
+                   }
+             }
         }
-
-        stage('Terraform apply'){
-            steps{
-                dir('EC2BY-JENKINS') {
-                    sh '''
-                    export AWS_ACCESS_KEY_ID=$AWS_CREDS_USR
-                    export AWS_SECRET_ACCESS_KEY=$AWS_CREDS_PSW
-                    terraform apply -auto-approve
-                    '''
-                }
-            }
+        stage('Terraform validate'){
+             steps{
+                 dir('EC2BY-JENKINS') {
+                      sh 'terraform validate'
+                   }
+             }
+        }
+        stage('Terraform plan'){
+             steps{
+                 dir('EC2BY-JENKINS') {
+                      sh 'terraform plan'
+                   }
+             }
+        }
+        stage('Terraform apply/destroy'){
+             steps{
+                 dir('EC2BY-JENKINS') {
+                      sh 'terraform ${action} --auto-approve'
+                   }
+             }
         }
     }
 }
