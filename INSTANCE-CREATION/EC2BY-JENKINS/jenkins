@@ -13,28 +13,32 @@ pipeline{
         }
         stage('Terraform init'){
              steps{
-                 dir('EC2BY-JENKINS') {
+                 dir('INSTANCE-CREATION/EC2BY-JENKINS') {
+                    sh 'ls -la' {
                       sh 'terraform init'
                    }
              }
         }
         stage('Terraform validate'){
              steps{
-                 dir('EC2BY-JENKINS') {
+                  dir('INSTANCE-CREATION/EC2BY-JENKINS') {
+                    sh 'ls -la' {
                       sh 'terraform validate'
                    }
              }
         }
         stage('Terraform plan'){
              steps{
-                 dir('EC2BY-JENKINS') {
+                  dir('INSTANCE-CREATION/EC2BY-JENKINS') {
+                    sh 'ls -la' {
                       sh 'terraform plan'
                    }
              }
         }
         stage('Terraform apply/destroy'){
              steps{
-                 dir('EC2BY-JENKINS') {
+                  dir('INSTANCE-CREATION/EC2BY-JENKINS') {
+                    sh 'ls -la'{
                       sh 'terraform ${action} --auto-approve'
                    }
              }
