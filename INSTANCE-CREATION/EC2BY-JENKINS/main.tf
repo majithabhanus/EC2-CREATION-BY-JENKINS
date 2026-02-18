@@ -35,6 +35,6 @@ resource "aws_instance" "jenkins_ec2" {
   vpc_security_group_ids = [aws_security_group.ec2_sg.id]
 
   tags = {
-    Name = "EC2-Created-By-Jenkins"
+    Name = "EC2-new-server"
   }
 }
