@@ -1,5 +1,8 @@
 pipeline{
     agent any
+        environment {
+        AWS_ACCESS_KEY_ID = credentials('aws-cred')
+    }
     stages {
         stage('Checkout from Git'){
             steps{
