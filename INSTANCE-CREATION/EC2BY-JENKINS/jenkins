@@ -1,47 +1,22 @@
-pipeline{
+pipeline {
     agent any
+
     stages {
-        stage('Checkout from Git'){
-            steps{
-                git branch: 'master', url: 'https://github.com/majithabhanus/EC2-CREATION-BY-JENKINS.git'
+
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/majithabhanus/EC2-CREATION-BY-JENKINS.git'
             }
         }
-        stage('Terraform version'){
-             steps{
-                 sh 'terraform --version'
-             }
-        }
-        stage('Terraform init'){
-             steps{
-                 dir('INSTANCE-CREATION/EC2BY-JENKINS') {
-                    sh 'ls -la' {
-                      sh 'terraform init'
-                   }
-             }
-        }
-        stage('Terraform validate'){
-             steps{
-                  dir('INSTANCE-CREATION/EC2BY-JENKINS') {
-                    sh 'ls -la' {
-                      sh 'terraform validate'
-                   }
-             }
-        }
-        stage('Terraform plan'){
-             steps{
-                  dir('INSTANCE-CREATION/EC2BY-JENKINS') {
-                    sh 'ls -la' {
-                      sh 'terraform plan'
-                   }
-             }
-        }
-        stage('Terraform apply/destroy'){
-             steps{
-                  dir('INSTANCE-CREATION/EC2BY-JENKINS') {
-                    sh 'ls -la'{
-                      sh 'terraform ${action} --auto-approve'
-                   }
-             }
+
+        stage('Terraform') {
+            steps {
+                dir('INSTANCE-CREATION/EC2BY-JENKINS') {
+                    sh 'terraform init'
+                    sh 'terraform plan'
+                    sh 'terraform apply -auto-approve'
+                }
+            }
         }
     }
 }
